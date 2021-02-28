@@ -23,7 +23,6 @@ def get_question_by_id(id):
 
     response['id'] = question_options['question'][1]
     response['text'] = question_options['question'][0]
-    print(question_options)
 
     for o in question_options['options']:
         option = dict()
