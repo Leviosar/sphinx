@@ -8,12 +8,12 @@ class Database:
         self.c = self.conn.cursor()
 
     def get_question_by_id(self, id):
-        s = f'''SELECT text
+        s = f'''SELECT text, id
                 FROM questions
                 WHERE id = ?
             '''
 
-        s2 = f'''SELECT text, correct
+        s2 = f'''SELECT text, correct, id
                  FROM options
                  WHERE question_id = ?
              '''

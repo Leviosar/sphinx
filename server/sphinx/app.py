@@ -17,18 +17,24 @@ def get_question_by_id(id):
     question_options = db.get_question_by_id(id)
 
     response = {
-        'question': '',
+        'text': '',
         'options': [],
-        'answer': ''
     }
 
-    response['question'] = question_options['question'][0]
- 
+    response['id'] = question_options['question'][1]
+    response['text'] = question_options['question'][0]
+    print(question_options)
+
     for o in question_options['options']:
-        response['options'].append(o[0])
+        option = dict()
+
+        option['text'] = o[0]
+        option['id'] = o[2]
+
+        response['options'].append(option)
 
         if o[1] == 1:
-            response['answer'] = o[0]
+            response['answer_id'] = o[2]
 
     return jsonify(response)
 
