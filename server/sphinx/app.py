@@ -1,5 +1,3 @@
-from random import randint
-
 from flask import Flask, jsonify, request
 
 from .db.Database import Database
@@ -9,6 +7,47 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return 'Bem-viado caralho'
+
+@app.route('/questions')
+def get_questions_by_category():
+    db = Database()
+
+    category_id = request.args.get('category')
+
+    # TODO: implement error treating
+    if category_id is None:
+        return 'Tá de sacanagem menor'
+
+    questions = db.get_questions_by_category(category_id)
+
+    response = []
+
+    for q in questions['questions']:
+        question = {
+            'text': '',
+            'options': []
+        }
+
+        question_id = q[1]
+
+        question['text'] = q[0]
+        question['id'] = question_id
+
+        for o in questions['options']:
+            option = dict()
+
+            if o[3] == question_id:
+                option['id'] = o[2]
+                option['text'] = o[0]
+
+                if o[1] == 1:
+                    question['answer_id'] = o[2]
+
+                question['options'].append(option)
+
+        response.append(question)
+
+    return jsonify(response)
 
 @app.route('/questions/<id>')
 def get_question_by_id(id):
