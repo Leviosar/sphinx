@@ -28,20 +28,18 @@ def get_questions_by_category():
             'options': []
         }
 
-        question_id = q[1]
-
-        question['text'] = q[0]
-        question['id'] = question_id
+        question['text'] = q['text']
+        question['id'] = q['id']
 
         for o in questions['options']:
             option = dict()
 
-            if o[3] == question_id:
-                option['id'] = o[2]
-                option['text'] = o[0]
+            if o['question_id'] == q['id']:
+                option['id'] = o['id']
+                option['text'] = o['text']
 
-                if o[1] == 1:
-                    question['answer_id'] = o[2]
+                if o['correct'] == 1:
+                    question['answer_id'] = o['id']
 
                 question['options'].append(option)
 
@@ -54,25 +52,26 @@ def get_question_by_id(id):
     db = Database()
 
     question_options = db.get_question_by_id(id)
+    print(question_options)
 
     response = {
         'text': '',
         'options': [],
     }
 
-    response['id'] = question_options['question'][1]
-    response['text'] = question_options['question'][0]
+    response['id'] = question_options['question']['id']
+    response['text'] = question_options['question']['text']
 
     for o in question_options['options']:
         option = dict()
 
-        option['text'] = o[0]
-        option['id'] = o[2]
+        option['text'] = o['text']
+        option['id'] = o['id']
 
         response['options'].append(option)
 
-        if o[1] == 1:
-            response['answer_id'] = o[2]
+        if o['correct'] == 1:
+            response['answer_id'] = o['id']
 
     return jsonify(response)
 
@@ -82,6 +81,4 @@ def get_categories():
 
     categories = db.get_categories()
 
-    response = [{'title': c[1], 'id': c[0]} for c in categories]
-
-    return jsonify(response)
+    return jsonify(categories)
