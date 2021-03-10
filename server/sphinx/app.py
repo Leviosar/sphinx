@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 
-from .db.Database import Database
+from db.Database import Database
 
 app = Flask(__name__)
 
@@ -82,3 +82,6 @@ def get_categories():
     categories = db.get_categories()
 
     return jsonify(categories)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')

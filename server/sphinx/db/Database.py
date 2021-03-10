@@ -2,7 +2,7 @@ import sqlite3
 
 import dataset
 
-from ..config import DB_PATH
+from config import DB_PATH
 
 class Database:
     def __init__(self):
