@@ -6,47 +6,33 @@ from config import DB_PATH
 
 class Database:
     def __init__(self):
-        #self.db = dataset.connect(f'sqlite:///{DB_PATH}')
-        ...
+        self.db = dataset.connect(f'sqlite:///{DB_PATH}')
 
     def get_questions_by_category(self, category_id):
-        questions = list(self.db['questions'].find(
-            category_id=category_id,
-            order_by='id',
-            _limit=100
+        response = list(self.db.query(
+            f'''SELECT
+                 options.id as o_id, options.text as o_text, options.correct, questions.id as q_id, questions.text as q_text
+                FROM questions
+                 INNER JOIN options ON questions.id = options.question_id
+                  WHERE questions.category_id = :category_id
+            ''',
+            category_id=category_id
         ))
 
-        options = list(self.db.query(
-            f'''SELECT text, correct, id, question_id
-                 FROM options
-                 WHERE question_id
-                    IN (
-                        SELECT id
-                        FROM questions WHERE category_id = :category_id
-                    )
-                 ORDER BY question_id
-                 LIMIT 500
-             ''',
-             category_id=category_id
-        ))
-
-        return {'questions': questions, 'options': options}
+        return response
 
     def get_question_by_id(self, id):
-        db = dataset.connect(f'sqlite:///{DB_PATH}')
-        question = db['questions'].find_one(
-            id=id
-        )
-
-        options = list(db.query(
-            f'''SELECT text, correct, id
-                 FROM options
-                 WHERE question_id = :question_id
+        response = list(self.db.query(
+            f'''SELECT
+                 options.id as o_id, options.text as o_text, options.correct, questions.id as q_id, questions.text as q_text
+                FROM options
+                 INNER JOIN questions ON options.question_id = questions.id
+                  WHERE question_id = :question_id
              ''',
              question_id=id
         ))
 
-        return {'question': question, 'options': options}
+        return response
 
     def get_categories(self):
         categories = list(self.db['categories'].find())
