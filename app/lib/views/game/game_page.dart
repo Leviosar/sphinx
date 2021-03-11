@@ -16,7 +16,7 @@ class _GamePageState extends State<GamePage> {
     return StreamBuilder(
       stream: BlocProvider.getBloc<GameBloc>().getCurrentGame,
       builder: (BuildContext context, AsyncSnapshot<Game> game) {
-        if (!game.hasData) return Container();
+        if (!game.hasData) return Center();
         
         return Scaffold(
           backgroundColor: Theme.of(context).primaryColor,

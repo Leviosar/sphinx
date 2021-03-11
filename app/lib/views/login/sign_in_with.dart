@@ -71,16 +71,7 @@ class _SignInWithState extends State<SignInWith> with TickerProviderStateMixin {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         AnimatedButton(
-          child: IconButton(icon: Icon(FontAwesomeIcons.github), onPressed: (){}, color: Colors.white),
-          onPressed: () {
-            if (this.githubAnimationController.value == 1) {
-              this.githubAnimationController.reverse();
-            }
-          },
-          width: this.githubAnimationController,
-        ),
-        AnimatedButton(
-          child: IconButton(icon: Icon(FontAwesomeIcons.google), onPressed: (){}, color: Colors.white),
+          child: Icon(FontAwesomeIcons.google, color: Colors.white),
           onPressed: () {
             if (this.googleAnimationController.value == 1.0) {
               this.googleAnimationController.reverse();
