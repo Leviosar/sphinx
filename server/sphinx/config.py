@@ -1,1 +1,1 @@
-DB_PATH = 'db/esfincter.db'
+DB_PATH = "db/esfincter.db"

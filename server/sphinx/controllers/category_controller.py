@@ -1,5 +1,6 @@
 from db.repositories.category_repository import CategoryRepository
 
+
 class CategoryController:
     def __init__(self):
         self.repository = CategoryRepository()
