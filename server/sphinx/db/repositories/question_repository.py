@@ -1,12 +1,10 @@
-import sqlite3
+from db.repositories.base_repository import BaseRepository 
 
-import dataset
+class QuestionRepository(BaseRepository):
 
-from config import DB_PATH
-
-class Database:
     def __init__(self):
-        self.db = dataset.connect(f'sqlite:///{DB_PATH}')
+        self.table = "questions"
+        super().__init__()
 
     def get_questions_by_category(self, category_id):
         response = list(self.db.query(
@@ -33,8 +31,3 @@ class Database:
         ))
 
         return response
-
-    def get_categories(self):
-        categories = list(self.db['categories'].find())
-
-        return categories

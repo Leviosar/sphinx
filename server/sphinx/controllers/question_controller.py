@@ -1,18 +1,15 @@
-from db.Database import Database
+from db.repositories.question_repository import QuestionRepository
 
-class Controller:
+class QuestionController:
     def __init__(self):
-        self.db = Database()
-
-    def get_categories(self):
-        return self.db.get_categories()
+        self.repository = QuestionRepository()
 
     def get_question_by_id(self, id):
         response = {
             'options': []
         }
         
-        result = self.db.get_question_by_id(id)
+        result = self.repository.get_question_by_id(id)
 
         response['id'] = result[0]['q_id']
         response['text'] = result[0]['q_text']
@@ -34,7 +31,7 @@ class Controller:
         response = []
         questions = {}
 
-        result = self.db.get_questions_by_category(category_id)
+        result = self.repository.get_questions_by_category(category_id)
 
         for r in result:
             option = {}
