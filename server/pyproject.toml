@@ -8,6 +8,7 @@ authors = ["Your Name <you@example.com>"]
 python = "^3.9"
 Flask = "^1.1.2"
 dataset = "^1.4.5"
+PyJWT = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
