@@ -26,36 +26,16 @@ class QuestionController:
 
         return response
 
-    def get_questions_by_category(self, category_id):
-        response = []
-        questions = {}
+    def get_questions_by_category(self, ids, limit):
+        result = self.repository.get_questions_by_category(ids, limit=limit)
 
-        result = self.repository.get_questions_by_category(category_id)
+        for row in result:
+            row["options"] = self.repository.options(row["id"])
+            row["answer_id"] = list(filter(lambda option: option["correct"] == 1, row["options"]))[0]["id"]
 
-        for r in result:
-            option = {}
-
-            if not r["q_id"] in questions:
-                questions[r["q_id"]] = {"options": []}
-
-                questions[r["q_id"]]["text"] = r["q_text"]
-
-            option["id"] = r["o_id"]
-            option["text"] = r["o_text"]
-
-            questions[r["q_id"]]["options"].append(option)
-
-            if r["correct"] == 1:
-                questions[r["q_id"]]["answer_id"] = r["o_id"]
-
-        for id, question in questions.items():
-            response.append(
-                {
-                    "id": id,
-                    "answer_id": question["answer_id"],
-                    "text": question["text"],
-                    "options": question["options"],
-                }
-            )
-
-        return response
+        return {
+            "page": 1,
+            "per_page": limit,
+            "count": len(result),
+            "data": result
+        }

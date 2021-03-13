@@ -37,13 +37,14 @@ def register():
 
 @app.route("/questions")
 def get_questions_by_category():
-    category_id = request.args.get("category")
+    ids = request.json.get("categories")
+    limit = request.json.get("limit", 15)
 
     # TODO: implement error treating
-    if category_id is None:
+    if ids is None:
         return "Tá de sacanagem menor"
 
-    questions = question_controller.get_questions_by_category(category_id)
+    questions = question_controller.get_questions_by_category(ids, limit)
 
     return jsonify(questions)
 
