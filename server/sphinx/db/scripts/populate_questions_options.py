@@ -54,7 +54,7 @@ def populate_questions_options():
     for root, dirs, files in os.walk("../quizes/"):
         questionId = 1
         for filename in files:
-            with open(root + filename) as json_file:
+            with open(root + filename, encoding='utf8') as json_file:
                 j = json.load(json_file)
 
                 for question in j:
