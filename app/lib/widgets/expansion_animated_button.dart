@@ -21,7 +21,13 @@ class ExpansionAnimatedButton extends AnimatedWidget {
         onTap: this.onPressed,
         child: Container(
           child: tickSize != 60 ? 
-            Container() : 
+            Center(
+              child: SizedBox(
+                child: CircularProgressIndicator(),
+                height: 50,
+                width: 50
+              ),
+            ) : 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

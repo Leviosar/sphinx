@@ -13,7 +13,7 @@ class App extends StatelessWidget {
       blocs: this.blocs(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: LoginPage(),
         theme: ThemeData(
           accentColor: Color(0xfff4e3bd),
           primaryColor: Color(0xff1f89ca),

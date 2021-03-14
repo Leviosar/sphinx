@@ -7,8 +7,15 @@ part 'question.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Question {
   int id;
+
+  @JsonKey(name: 'category_id')
   int idCategory;
+  
+  @JsonKey(name: 'answer_id')
+  int idAnswer;
+
   String text;
+  
   List<Option> options;
 
   Question({this.id, this.idCategory, this.text});
