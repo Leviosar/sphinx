@@ -57,9 +57,9 @@ def get_question_by_id(id):
     return jsonify(response)
 
 
-@app.route("/games", methods=["POST"])
+@app.route("/games")
 def get_games_by_user_id():
-    response = game_controller.get_games_by_user_id(request.form.get("user_id"))
+    response = game_controller.get_games_by_user_id(request.json.get("user_id"))
 
     return jsonify(response)
 
