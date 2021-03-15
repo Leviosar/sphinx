@@ -2,12 +2,19 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'option.g.dart';
 
+intToBool(int i) => i == 1;
+
 @JsonSerializable()
 class Option {
-  int id;
-  int idQuestion;
+  @JsonKey(fromJson: intToBool)
   bool correct;
+  
   String text;
+
+  int id;
+
+  @JsonKey(name: 'question_id')
+  int idQuestion;
 
   Option({this.id, this.idQuestion, this.text});
 

@@ -36,7 +36,7 @@ def register():
         )
 
 
-@app.route("/questions")
+@app.route("/questions", methods=["POST"])
 def get_questions_by_category():
     ids = request.json.get("categories")
     limit = request.json.get("limit", 15)

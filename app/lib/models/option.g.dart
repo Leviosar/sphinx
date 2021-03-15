@@ -9,14 +9,14 @@ part of 'option.dart';
 Option _$OptionFromJson(Map<String, dynamic> json) {
   return Option(
     id: json['id'] as int,
-    idQuestion: json['idQuestion'] as int,
+    idQuestion: json['question_id'] as int,
     text: json['text'] as String,
-  )..correct = json['correct'] as bool;
+  )..correct = intToBool(json['correct'] as int);
 }
 
 Map<String, dynamic> _$OptionToJson(Option instance) => <String, dynamic>{
-      'id': instance.id,
-      'idQuestion': instance.idQuestion,
       'correct': instance.correct,
       'text': instance.text,
+      'id': instance.id,
+      'question_id': instance.idQuestion,
     };

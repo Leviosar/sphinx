@@ -1,5 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:sphinx/views/game/question_display.dart';
 
 import '../../controllers/game_bloc.dart';
 import '../../models/game.dart';
@@ -20,7 +21,12 @@ class _GamePageState extends State<GamePage> {
         
         return Scaffold(
           backgroundColor: Theme.of(context).primaryColor,
-          body: Container(child: Text(game.data.start.toString()))
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: QuestionDisplay(game: game.data),
+            ) 
+          )
         );
       },
     );

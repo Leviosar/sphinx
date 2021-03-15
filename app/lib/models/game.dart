@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sphinx/models/question.dart';
 
 import '../views/create_game/dificulty_selector.dart';
 import 'category.dart';
@@ -8,9 +9,10 @@ part 'game.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Game {
-  int playerId;
+  String playerId;
   DateTime start;
   List<Category> categories;
+  List<Question> questions;
   Dificulty dificulty;
   GameModes mode;
 
