@@ -3,13 +3,14 @@ from flask import Flask, jsonify, request
 from controllers.user_controller import UserController
 from controllers.question_controller import QuestionController
 from controllers.category_controller import CategoryController
+from controllers.game_controller import GameController
 
 app = Flask(__name__)
 
 user_controller = UserController()
 question_controller = QuestionController()
 category_controller = CategoryController()
-
+game_controller = GameController()
 
 @app.route("/")
 def hello_world():
@@ -52,6 +53,13 @@ def get_questions_by_category():
 @app.route("/questions/<id>")
 def get_question_by_id(id):
     response = question_controller.get_question_by_id(id)
+
+    return jsonify(response)
+
+
+@app.route("/games", methods=["POST"])
+def get_games_by_user_id():
+    response = game_controller.get_games_by_user_id(request.form.get("user_id"))
 
     return jsonify(response)
 
