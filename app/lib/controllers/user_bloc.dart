@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:http/http.dart' as http;
 import 'package:rxdart/rxdart.dart';
+import 'package:sphinx/requests/RegisterUser.dart';
 
 import '../models/category.dart';
 import '../models/user.dart';
@@ -24,14 +25,20 @@ class UserBloc extends BlocBase {
   Future<User> auth() async {
     User user = await this.getUser.first;
     
-    http.Response response = await GetCategoriesRequest(user).send();
+    http.Response authResponse = await RegisterUser(user).send();
+    print(authResponse.body);
+    if (authResponse.statusCode == 200) {
+      http.Response response = await GetCategoriesRequest(user).send();
+      
+      List<dynamic> data = jsonDecode(response.body);
     
-    List<dynamic> data = jsonDecode(response.body);
+      print(response.body);
     
-    if (response.statusCode == 200) {
-      List<Category> categories = List.generate(data.length, (index) => Category.fromJson(data[index]));
+      if (response.statusCode == 200) {
+        List<Category> categories = List.generate(data.length, (index) => Category.fromJson(data[index]));
 
-      BlocProvider.getBloc<CategoriesBloc>().categories = categories;
+        BlocProvider.getBloc<CategoriesBloc>().categories = categories;
+      }
     }
   }
 }
