@@ -64,6 +64,22 @@ def get_games_by_user_id():
     return jsonify(response)
 
 
+@app.route("/games/register", methods=["POST"])
+def register_game():
+    response = game_controller.register(
+        request.json.get("user_id"),
+        request.json.get("start"),
+        request.json.get("end"),
+        request.json.get("points"),
+        request.json.get("categories")
+    )
+
+    if response["error"] == True:
+        return response, response["code"]
+
+    return jsonify(sucess=True)
+
+
 @app.route("/categories")
 def get_categories():
     categories = category_controller.get_categories()

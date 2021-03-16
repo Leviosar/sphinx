@@ -10,3 +10,17 @@ class GameRepository(BaseRepository):
         games["games"] = list(self.db["game"].find(user_id=user_id))
 
         return games
+
+    def store_game(self, user_id, start, end, points):
+        return self.db["game"].insert(dict(
+            user_id=user_id,
+            start=start,
+            end=end,
+            points=points,
+        ))
+
+    def store_game_category(self, game_id, category_id):
+        return self.db["game_categories"].insert(dict(
+            game_id=game_id,
+            category_id=category_id,
+        ))
