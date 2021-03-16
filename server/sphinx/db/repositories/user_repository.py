@@ -7,9 +7,9 @@ class UserRepository(BaseRepository):
         super().__init__()
 
     def get(self, user_id):
-        return self.db.query(
+        return list(self.db.query(
             f"SELECT users.* FROM users WHERE id = :param LIMIT 1", param=user_id
-        )
+        ))
 
     def store(self, user_id, name, email, photo):
         return self.db.query(
