@@ -53,7 +53,7 @@ class _QuestionDisplayState extends State<QuestionDisplay> with SingleTickerProv
     Future.delayed(Duration(milliseconds: delay),
       () {
         setState(() {
-          if (this.questionIndex > this.widget.game.questions.length - 1) {
+          if (this.questionIndex < this.widget.game.questions.length - 1) {
             this.questionIndex++;
             this.resetTimer();
           } else {
