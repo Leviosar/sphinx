@@ -11,8 +11,8 @@ class UserController:
     def get(self, user_id):
         user = self.repository.get(user_id)
 
-        if len(list(user)) != 0:
-            return list(user)[0]
+        if len(user) != 0:
+            return user
         else:
             return None
 
