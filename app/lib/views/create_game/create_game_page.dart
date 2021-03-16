@@ -38,7 +38,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     Game game = Game(playerId: user.id, categories: this.categories, dificulty: this.dificulty, mode: this.widget.mode, start: DateTime.now());
     
     http.Response response = await GetQuestionsByCategoryRequest(user, categories).send();
-    print(response.body);
+
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       List<Question> questions = [];

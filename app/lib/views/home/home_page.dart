@@ -61,7 +61,6 @@ class _HomePageState extends State<HomePage> {
                     return Container(
                       alignment: Alignment.center,
                       color: Colors.lightBlue[100 * (index % 9)],
-                      child: Text('List Item $index'),
                     );
                   },
                 ),
