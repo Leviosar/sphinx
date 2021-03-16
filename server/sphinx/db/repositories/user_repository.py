@@ -26,3 +26,14 @@ class UserRepository(BaseRepository):
             user_id=user_id,
             token=token,
         )
+
+    def get_ranking(self, limit):
+        return list(self.db.query(
+            f'''SELECT users.id, users.name as name, users.email as email, SUM(game.points) as points
+              FROM users
+              INNER JOIN game ON users.id = game.user_id
+              GROUP BY game.user_id
+              ORDER BY points DESC
+              LIMIT :_limit''',
+              _limit=limit
+        ))

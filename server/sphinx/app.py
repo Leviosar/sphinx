@@ -17,6 +17,15 @@ def hello_world():
     return "Index"
 
 
+@app.route("/ranking")
+def get_ranking():
+    limit = request.args.get("limit", 15)
+
+    response = user_controller.get_ranking(limit)
+
+    return jsonify(response)
+
+
 @app.route("/register", methods=["POST"])
 def register():
     user = {
