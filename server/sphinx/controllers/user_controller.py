@@ -34,3 +34,8 @@ class UserController:
         user = self.repository.store(user_id, name, email, photo)
         
         return self.auth(user_id)
+
+    def get_ranking(self, limit=15):
+        response = self.repository.get_ranking(limit)
+
+        return response
