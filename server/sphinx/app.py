@@ -14,7 +14,7 @@ game_controller = GameController()
 
 @app.route("/")
 def hello_world():
-    return "Bem-viado caralho"
+    return "Index"
 
 
 @app.route("/register", methods=["POST"])
