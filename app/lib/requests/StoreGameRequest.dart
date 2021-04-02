@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:sphinx/models/game.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/user.dart';
 import 'BaseRequest.dart';
@@ -11,7 +12,7 @@ class StoreGameRequest implements BaseRequest {
 
   final User user;
   final Game game;
-  final String url = "http://joaomaia.me:5000/games/register";
+  final String url = "${env["API_BASE_URL"]}/games/register";
 
   StoreGameRequest(this.user, this.game);
 

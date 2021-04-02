@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:sphinx/models/category.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../models/user.dart';
 import 'BaseRequest.dart';
@@ -12,7 +13,7 @@ class GetQuestionsByCategoryRequest implements BaseRequest {
   final User user;
   final int limit;
   final List<Category> categories;
-  final String url = "http://joaomaia.me:5000/questions";
+  final String url = "${env["API_BASE_URL"]}/questions";
 
   GetQuestionsByCategoryRequest(this.user, this.categories, { this.limit = 15 });
 

@@ -23,6 +23,7 @@ environment:
 dependencies:
   bloc_pattern: ^2.5.1
   build_runner: ^1.11.1
+  flutter_dotenv: ^4.0.0-nullsafety.0
   font_awesome_flutter: ^8.11.0
   github_sign_in: ^0.0.3
   google_sign_in: ^4.5.9
@@ -30,7 +31,7 @@ dependencies:
   json_serializable: ^3.5.1
   rxdart: ^0.25.0
   simple_animations: ^2.5.1
-  wave: ^0.1.0
+  wave: ^0.2.0
   flutter:
     sdk: flutter
 
@@ -56,6 +57,7 @@ flutter:
 
   assets:
     - assets/images/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
