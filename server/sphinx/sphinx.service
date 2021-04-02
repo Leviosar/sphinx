@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance of sphinx
+After=network.target
+
+[Service]
+User=root
+Group=devs
+WorkingDirectory=/var/www/apps/sphinx/server/sphinx
+Environment="PATH=/var/www/apps/sphinx/server/sphinx/sphinxenv/bin"
+ExecStart=/var/www/apps/sphinx/server/sphinx/sphinxenv/bin/uwsgi --ini sphinx.ini
+
+[Install]
+WantedBy=multi.user.target
