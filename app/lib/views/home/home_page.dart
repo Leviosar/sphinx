@@ -1,5 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:sphinx/views/home/home_page_ranking.dart';
 
 import '../../controllers/user_bloc.dart';
 import '../../models/user.dart';
@@ -52,7 +53,10 @@ class _HomePageState extends State<HomePage> {
                 child: GameModeSelection(),
               ),
               SliverToBoxAdapter(
-                child: SideBanner(title: "Histórico", direction: SideBannerDirection.right,),
+                child: SideBanner(title: "Ranking", direction: SideBannerDirection.right),
+              ),
+              SliverToBoxAdapter(
+                child: HomePageRanking(),
               ),
               SliverFixedExtentList(
                 itemExtent: 50.0,
