@@ -136,3 +136,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+*.py.swp
+*.db-shm
+*.db-wal
