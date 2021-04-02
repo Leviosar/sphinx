@@ -27,7 +27,7 @@ categories = [
 
 
 def populate_categories():
-    conn = db.connect("../esfincter.db")
+    conn = db.connect("../sphinx.db")
     cursor = conn.cursor()
     for c in categories:
         cursor.execute("INSERT INTO categories (title) VALUES ('%s')" % c)

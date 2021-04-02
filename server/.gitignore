@@ -140,3 +140,4 @@ cython_debug/
 *.py.swp
 *.db-shm
 *.db-wal
+*.db

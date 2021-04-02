@@ -39,7 +39,7 @@ fromJsonToDB = {
 
 categories = []
 
-conn = sqlite3.connect("../esfincter.db")
+conn = sqlite3.connect("../sphinx.db")
 cursor = conn.cursor()
 
 for c in cursor.execute("SELECT * FROM categories"):
