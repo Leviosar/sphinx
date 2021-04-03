@@ -1,6 +1,6 @@
 import jwt
 
-from db.repositories.user_repository import UserRepository
+from sphinx.db.repositories.user_repository import UserRepository
 from datetime import datetime
 
 
@@ -9,17 +9,12 @@ class UserController:
         self.repository = UserRepository()
 
     def get(self, user_id):
-        user = self.repository.get(user_id)
-
-        if len(user) != 0:
-            return user
-        else:
-            return None
+        return self.repository.get(user_id)
 
     def auth(self, user_id):
         user = self.repository.get(user_id)
 
-        if len(list(user)) != 0:
+        if user:
             token_fields = {"id": user_id, "time": datetime.now().isoformat()}
 
             token = jwt.encode(token_fields, "segredo, mané", algorithm="HS256")

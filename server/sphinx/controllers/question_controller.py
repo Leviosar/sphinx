@@ -1,4 +1,4 @@
-from db.repositories.question_repository import QuestionRepository
+from sphinx.db.repositories.question_repository import QuestionRepository
 
 
 class QuestionController:
@@ -28,11 +28,7 @@ class QuestionController:
 
     def get_questions_by_category(self, ids, limit):
         result = self.repository.get_questions_by_category(ids, limit=limit)
-
-        for row in result:
-            row["options"] = self.repository.options(row["id"])
-            row["answer_id"] = list(filter(lambda option: option["correct"] == 1, row["options"]))[0]["id"]
-
+        
         return {
             "page": 1,
             "per_page": limit,

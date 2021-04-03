@@ -1,34 +1,25 @@
-from db.repositories.base_repository import BaseRepository
+from sphinx.db.repositories.base_repository import BaseRepository
+from sphinx.models import UserModel
 
-
-class UserRepository(BaseRepository):
+class UserRepository():
     def __init__(self):
-        self.table = "users"
+        self.model = UserModel
         super().__init__()
 
     def get(self, user_id):
-        return list(self.db.query(
-            f"SELECT users.* FROM users WHERE id = :param LIMIT 1", param=user_id
-        ))
+        return self.model.query.get(user_id)
 
     def store(self, user_id, name, email, photo):
-        return self.db.query(
-            f"INSERT INTO users (id, name, email, photo) values (:user_id, :name, :email, :photo) RETURNING *",
-            user_id=user_id,
-            name=name,
-            email=email,
-            photo=photo,
-        )
+        return self.model.create(id=user_id, name=name, email=email, photo=photo)
 
     def store_token(self, user_id, token):
-       	self.db.query(
-            f"UPDATE users SET token = :token WHERE users.id = :user_id",
-            user_id=user_id,
-            token=token,
-        )
+        user = self.get(user_id)
+        user.token = token
+        user.update()
+        return user
 
     def get_ranking(self, limit):
-        return list(self.db.query(
+        return self.db.execute(
             f'''SELECT users.id, users.name as name, users.email as email, SUM(game.points) as points
               FROM users
               INNER JOIN game ON users.id = game.user_id
@@ -36,4 +27,4 @@ class UserRepository(BaseRepository):
               ORDER BY points DESC
               LIMIT :_limit''',
               _limit=limit
-        ))
+        )

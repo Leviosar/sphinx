@@ -1,4 +1,4 @@
-import sqlite3 as db
+from sphinx.models import CategoryModel
 
 categories = [
     "Animals",
@@ -26,13 +26,9 @@ categories = [
 ]
 
 
-def populate_categories():
-    conn = db.connect("../sphinx.db")
-    cursor = conn.cursor()
-    for c in categories:
-        cursor.execute("INSERT INTO categories (title) VALUES ('%s')" % c)
+def populate_categories(db):
+    for category in categories:
+        insert = CategoryModel(title=category)
+        db.session.add(insert)
 
-    conn.commit()
-
-
-populate_categories()
+    db.session.commit()

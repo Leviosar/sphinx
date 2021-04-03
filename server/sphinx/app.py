@@ -1,9 +1,13 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 
-from controllers.user_controller import UserController
-from controllers.question_controller import QuestionController
-from controllers.category_controller import CategoryController
-from controllers.game_controller import GameController
+from sphinx.controllers.user_controller import UserController
+from sphinx.controllers.question_controller import QuestionController
+from sphinx.controllers.category_controller import CategoryController
+from sphinx.controllers.game_controller import GameController
+
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from sphinx.config import DB_PATH
 
 app = Flask(__name__)
 
@@ -12,9 +16,16 @@ question_controller = QuestionController()
 category_controller = CategoryController()
 game_controller = GameController()
 
+app.config["SQLALCHEMY_DATABASE_URI"] = DB_PATH
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db = SQLAlchemy(app)
+
+from sphinx.models import CategoryModel, UserModel, GameModel, OptionModel, QuestionModel
+
 @app.route("/")
 def hello_world():
-    return "Index"
+    return "Ahoy"
 
 
 @app.route("/ranking")
@@ -50,9 +61,8 @@ def get_questions_by_category():
     ids = request.json.get("categories")
     limit = request.json.get("limit", 15)
 
-    # TODO: implement error treating
     if ids is None:
-        return "Tá de sacanagem menor"
+        return Response(status=400, {"error": "Malformed request, categories field missing"})
 
     questions = question_controller.get_questions_by_category(ids, limit)
 
@@ -68,7 +78,7 @@ def get_question_by_id(id):
 
 @app.route("/games")
 def get_games_by_user_id():
-    response = game_controller.get_games_by_user_id(request.json.get("user_id"))
+    response = game_controller.get_games_by_user_id(request.args.get("user"))
 
     return jsonify(response)
 
@@ -92,9 +102,12 @@ def register_game():
 @app.route("/categories")
 def get_categories():
     categories = category_controller.get_categories()
-
     return jsonify(categories)
 
+@app.route('/user')
+def get_user():
+    user = user_controller.get(request.args.get('id'))
+    return jsonify(user)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

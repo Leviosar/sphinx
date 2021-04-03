@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from db.repositories.game_repository import GameRepository
+from sphinx.db.repositories.game_repository import GameRepository
 
 
 class GameController:
@@ -8,9 +8,7 @@ class GameController:
         self.repository = GameRepository()
     
     def get_games_by_user_id(self, user_id):
-        games = self.repository.get_games_by_user_id(user_id)
-
-        return games
+        return self.repository.get_games_by_user_id(user_id)
 
     def register(self, user_id, start, end, points, categories):
         try:

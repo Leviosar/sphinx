@@ -2,9 +2,10 @@ import sqlite3
 
 import dataset
 
-from config import DB_PATH
+from sqlalchemy import create_engine
+from sphinx.config import DB_PATH
 
 
 class BaseRepository:
     def __init__(self):
-        self.db = dataset.connect(f"sqlite:///{DB_PATH}")
+        self.db = create_engine(DB_PATH)

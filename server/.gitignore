@@ -141,3 +141,5 @@ cython_debug/
 *.db-shm
 *.db-wal
 *.db
+
+**/config.py
