@@ -1,4 +1,4 @@
-from sphinx.models import CategoryModel
+from models import CategoryModel
 
 categories = [
     "Animals",

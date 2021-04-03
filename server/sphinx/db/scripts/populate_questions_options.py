@@ -2,7 +2,7 @@ import json
 import sqlite3
 import os
 
-from sphinx.models import CategoryModel, QuestionModel
+from models import CategoryModel, QuestionModel
 
 
 def translate_categories(categories):

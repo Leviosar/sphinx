@@ -1,4 +1,4 @@
-from sphinx.db.repositories.question_repository import QuestionRepository
+from db.repositories.question_repository import QuestionRepository
 
 
 class QuestionController:

@@ -1,6 +1,6 @@
 import jwt
 
-from sphinx.db.repositories.user_repository import UserRepository
+from db.repositories.user_repository import UserRepository
 from datetime import datetime
 
 

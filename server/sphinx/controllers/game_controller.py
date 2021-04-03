@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sphinx.db.repositories.game_repository import GameRepository
+from db.repositories.game_repository import GameRepository
 
 
 class GameController:

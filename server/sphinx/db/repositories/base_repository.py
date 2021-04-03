@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sphinx.config import DB_PATH
+from config import DB_PATH
 
 
 class BaseRepository:

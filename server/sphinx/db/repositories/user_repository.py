@@ -1,5 +1,5 @@
-from sphinx.db.repositories.base_repository import BaseRepository
-from sphinx.models import UserModel
+from db.repositories.base_repository import BaseRepository
+from models import UserModel
 
 
 class UserRepository:

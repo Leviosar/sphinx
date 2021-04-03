@@ -1,5 +1,5 @@
-from sphinx.db.repositories.base_repository import BaseRepository
-from sphinx.models import QuestionModel
+from db.repositories.base_repository import BaseRepository
+from models import QuestionModel
 import random
 
 

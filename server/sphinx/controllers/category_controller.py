@@ -1,4 +1,4 @@
-from sphinx.db.repositories.category_repository import CategoryRepository
+from db.repositories.category_repository import CategoryRepository
 
 
 class CategoryController:
