@@ -13,7 +13,7 @@ class UserRepository(BaseRepository):
 
     def store(self, user_id, name, email, photo):
         return self.db.query(
-            f"INSERT INTO users (id, name, email, photo) values (:user_id, :name, :email, :photo)",
+            f"INSERT INTO users (id, name, email, photo) values (:user_id, :name, :email, :photo) RETURNING *",
             user_id=user_id,
             name=name,
             email=email,
@@ -21,7 +21,7 @@ class UserRepository(BaseRepository):
         )
 
     def store_token(self, user_id, token):
-        return self.db.query(
+       	self.db.query(
             f"UPDATE users SET token = :token WHERE users.id = :user_id",
             user_id=user_id,
             token=token,
