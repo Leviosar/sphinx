@@ -1,6 +1,7 @@
 from sphinx.db.repositories.base_repository import BaseRepository
 from sphinx.models import CategoryModel
 
+
 class CategoryRepository(BaseRepository):
     def __init__(self):
         self.model = CategoryModel

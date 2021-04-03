@@ -6,7 +6,7 @@ from sphinx.db.repositories.game_repository import GameRepository
 class GameController:
     def __init__(self):
         self.repository = GameRepository()
-    
+
     def get_games_by_user_id(self, user_id):
         return self.repository.get_games_by_user_id(user_id)
 
@@ -15,7 +15,12 @@ class GameController:
             start = datetime.fromisoformat(start)
             end = datetime.fromisoformat(end)
         except ValueError:
-            return {"success": False, "error": True, "message": "Wrong date format", "code": 422}
+            return {
+                "success": False,
+                "error": True,
+                "message": "Wrong date format",
+                "code": 422,
+            }
 
         game_id = self.repository.store_game(user_id, start, end, points)
 

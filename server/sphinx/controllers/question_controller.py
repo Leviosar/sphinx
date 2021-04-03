@@ -28,10 +28,5 @@ class QuestionController:
 
     def get_questions_by_category(self, ids, limit):
         result = self.repository.get_questions_by_category(ids, limit=limit)
-        
-        return {
-            "page": 1,
-            "per_page": limit,
-            "count": len(result),
-            "data": result
-        }
+
+        return {"page": 1, "per_page": limit, "count": len(result), "data": result}

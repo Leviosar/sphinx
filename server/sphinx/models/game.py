@@ -2,14 +2,15 @@ from . import db
 from datetime import datetime
 from dataclasses import dataclass
 
+
 @dataclass
 class GameModel(db.Model):
-    __tablename__ = 'games'
+    __tablename__ = "games"
 
     id: int = db.Column(db.Integer, primary_key=True)
     title: str = db.Column(db.String)
     icon: str = db.Column(db.String)
-    user_id: str = db.Column(db.String, db.ForeignKey('user.id'))
+    user_id: str = db.Column(db.String, db.ForeignKey("user.id"))
     started_at: datetime = db.Column(db.DateTime)
     ended_at: datetime = db.Column(db.DateTime)
     points: int = db.Column(db.Integer)

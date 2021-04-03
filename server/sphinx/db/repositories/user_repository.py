@@ -1,7 +1,8 @@
 from sphinx.db.repositories.base_repository import BaseRepository
 from sphinx.models import UserModel
 
-class UserRepository():
+
+class UserRepository:
     def __init__(self):
         self.model = UserModel
         super().__init__()
@@ -20,11 +21,11 @@ class UserRepository():
 
     def get_ranking(self, limit):
         return self.db.execute(
-            f'''SELECT users.id, users.name as name, users.email as email, SUM(game.points) as points
+            f"""SELECT users.id, users.name as name, users.email as email, SUM(game.points) as points
               FROM users
               INNER JOIN game ON users.id = game.user_id
               GROUP BY game.user_id
               ORDER BY points DESC
-              LIMIT :_limit''',
-              _limit=limit
+              LIMIT :_limit""",
+            _limit=limit,
         )

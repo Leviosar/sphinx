@@ -21,7 +21,14 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-from sphinx.models import CategoryModel, UserModel, GameModel, OptionModel, QuestionModel
+from sphinx.models import (
+    CategoryModel,
+    UserModel,
+    GameModel,
+    OptionModel,
+    QuestionModel,
+)
+
 
 @app.route("/")
 def hello_world():
@@ -62,7 +69,9 @@ def get_questions_by_category():
     limit = request.json.get("limit", 15)
 
     if ids is None:
-        return Response(status=400, {"error": "Malformed request, categories field missing"})
+        return Response(
+            {"error": "Malformed request, categories field missing"}, status=400
+        )
 
     questions = question_controller.get_questions_by_category(ids, limit)
 
@@ -90,7 +99,7 @@ def register_game():
         request.json.get("start"),
         request.json.get("end"),
         request.json.get("points"),
-        request.json.get("categories")
+        request.json.get("categories"),
     )
 
     if response["error"] == True:
@@ -104,10 +113,12 @@ def get_categories():
     categories = category_controller.get_categories()
     return jsonify(categories)
 
-@app.route('/user')
+
+@app.route("/user")
 def get_user():
-    user = user_controller.get(request.args.get('id'))
+    user = user_controller.get(request.args.get("id"))
     return jsonify(user)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

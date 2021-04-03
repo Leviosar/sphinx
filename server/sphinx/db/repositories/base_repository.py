@@ -1,7 +1,3 @@
-import sqlite3
-
-import dataset
-
 from sqlalchemy import create_engine
 from sphinx.config import DB_PATH
 

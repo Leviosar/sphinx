@@ -27,7 +27,7 @@ class UserController:
 
     def register(self, user_id, name, email, photo):
         user = self.repository.store(user_id, name, email, photo)
-        
+
         return self.auth(user_id)
 
     def get_ranking(self, limit=15):

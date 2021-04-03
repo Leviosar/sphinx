@@ -1,4 +1,3 @@
-
 from sphinx.db.repositories.base_repository import BaseRepository
 
 
@@ -11,5 +10,3 @@ class OptionRepository(BaseRepository):
         return self.db.query(
             f"SELECT options.* FROM options WHERE id = :param LIMIT 1", param=option_id
         )
-    
-
