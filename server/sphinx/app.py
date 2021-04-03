@@ -1,13 +1,13 @@
 from flask import Flask, jsonify, request, Response
 
-from sphinx.controllers.user_controller import UserController
-from sphinx.controllers.question_controller import QuestionController
-from sphinx.controllers.category_controller import CategoryController
-from sphinx.controllers.game_controller import GameController
+from controllers.user_controller import UserController
+from controllers.question_controller import QuestionController
+from controllers.category_controller import CategoryController
+from controllers.game_controller import GameController
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from sphinx.config import DB_PATH
+from config import DB_PATH
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-from sphinx.models import (
+from models import (
     CategoryModel,
     UserModel,
     GameModel,
