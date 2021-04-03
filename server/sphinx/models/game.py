@@ -10,7 +10,7 @@ class GameModel(db.Model):
     id: int = db.Column(db.Integer, primary_key=True)
     title: str = db.Column(db.String)
     icon: str = db.Column(db.String)
-    user_id: str = db.Column(db.String, db.ForeignKey("user.id"))
+    user_id: str = db.Column(db.String, db.ForeignKey("users.id"))
     started_at: datetime = db.Column(db.DateTime)
     ended_at: datetime = db.Column(db.DateTime)
     points: int = db.Column(db.Integer)

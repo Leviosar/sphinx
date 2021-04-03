@@ -13,7 +13,7 @@ class UserModel(db.Model):
     token: str = db.Column(db.String)
     photo: str = db.Column(db.String)
     expiration: datetime = db.Column(db.DateTime)
-    games: List = db.relationship("GameModel", backref="user", lazy=True)
+    games: List = db.relationship("GameModel", back_populates="user")
 
     @classmethod
     def create(cls, **kwargs):
