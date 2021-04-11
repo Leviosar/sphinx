@@ -4,6 +4,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import load_only
 from datetime import datetime
 
+
 class UserRepository(BaseRepository):
     def __init__(self):
         self.model = UserModel
@@ -13,15 +14,15 @@ class UserRepository(BaseRepository):
     def get(self, user_id):
         user = self.model.query.get(user_id)
         user = user.__dict__
-        
-        user.pop('_sa_instance_state', None)
+
+        user.pop("_sa_instance_state", None)
 
         user["token"] = {
             "access_token": user["token"],
-            "expiration_date": datetime.now().isoformat(sep=" ", timespec='seconds'),
+            "expiration_date": datetime.now().isoformat(sep=" ", timespec="seconds"),
             "expires_in": 86400,
             "refresh_token": "",
-            "type_token": "Bearer"
+            "type_token": "Bearer",
         }
 
         return user
@@ -30,7 +31,7 @@ class UserRepository(BaseRepository):
         return self.model.create(id=user_id, name=name, email=email, photo=photo)
 
     def store_token(self, user_id, token):
-        user = self.get(user_id)
+        user = self.model.query.get(user_id)
         user.token = token
         user.update()
         return user
@@ -57,18 +58,27 @@ class UserRepository(BaseRepository):
             for user in rows
         ]
 
-
     def create_challenge(self, challenger_user_id, challenged_user_id, started_at):
-        return self.challenge_model.create(challenged_user_id=challenged_user_id, challenger_user_id=challenger_user_id, started_at=started_at)
+        return self.challenge_model.create(
+            challenged_user_id=challenged_user_id,
+            challenger_user_id=challenger_user_id,
+            started_at=started_at,
+        )
 
-
-    def update_challenge(self, challenger_user_id, challenged_user_id, challenger_game_id, challenged_game_id, started_at):
+    def update_challenge(
+        self,
+        challenger_user_id,
+        challenged_user_id,
+        challenger_game_id,
+        challenged_game_id,
+        started_at,
+    ):
         challenge = self.challenge_model.query.filter(
             self.challenge_model.challenger_user_id == challenger_user_id,
             self.challenge_model.challenged_user_id == challenged_user_id,
             self.challenge_model.started_at == started_at,
         ).all()
-        
+
         print(challenged_game_id)
         print(challenger_game_id)
 
@@ -77,29 +87,34 @@ class UserRepository(BaseRepository):
                 challenge[0].challenger_game_id = challenger_game_id
             if challenged_game_id is not None:
                 challenge[0].challenged_game_id = challenged_game_id
-            
+
             challenge[0].update()
 
-            return challenge[0] 
+            return challenge[0]
         else:
             return []
 
     def get_all_challenges_from_user(self, user_id):
         challenges = self.challenge_model.query.filter(
-            (self.challenge_model.challenger_user_id == user_id) | (self.challenge_model.challenged_user_id == user_id),
+            (self.challenge_model.challenger_user_id == user_id)
+            | (self.challenge_model.challenged_user_id == user_id),
         ).all()
 
         challenges = [challenge.__dict__ for challenge in challenges]
 
         for challenge in challenges:
 
-            del challenge['_sa_instance_state']
+            del challenge["_sa_instance_state"]
 
-            challenge["challenger_game"] = GameModel.query.get(challenge["challenger_game_id"])
-            challenge["challenged_game"] = GameModel.query.get(challenge["challenged_game_id"])
+            challenge["challenger_game"] = GameModel.query.get(
+                challenge["challenger_game_id"]
+            )
+            challenge["challenged_game"] = GameModel.query.get(
+                challenge["challenged_game_id"]
+            )
             challenge["challenger_user"] = self.get(challenge["challenger_user_id"])
             challenge["challenged_user"] = self.get(challenge["challenged_user_id"])
-            
+
             del challenge["challenger_game_id"]
             del challenge["challenged_game_id"]
             del challenge["challenger_user_id"]

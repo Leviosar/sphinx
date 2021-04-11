@@ -128,21 +128,33 @@ def get_users_by_email():
 
 @app.route("/challenge", methods=["POST"])
 def create_challenge():
-    challenger_user_id, challenged_user_id, started_at = request.json.get("challenger_user_id"), request.json.get("challenged_user_id"), request.json.get("started_at")
+    challenger_user_id, challenged_user_id, started_at = (
+        request.json.get("challenger_user_id"),
+        request.json.get("challenged_user_id"),
+        request.json.get("started_at"),
+    )
 
-    challenge = user_controller.create_challenge(challenger_user_id, challenged_user_id, started_at)
+    challenge = user_controller.create_challenge(
+        challenger_user_id, challenged_user_id, started_at
+    )
     return jsonify(challenge)
 
 
 @app.route("/challenge", methods=["PUT"])
 def update_challenge():
     challenger_user_id = request.json.get("challenger_user_id")
-    challenged_user_id = request.json.get("challenged_user_id") 
+    challenged_user_id = request.json.get("challenged_user_id")
     challenger_game_id = request.json.get("challenger_game_id")
     challenged_game_id = request.json.get("challenged_game_id")
-    started_at = request.json.get("started_at") 
+    started_at = request.json.get("started_at")
 
-    challenge = user_controller.update_challenge(challenger_user_id, challenged_user_id, challenger_game_id, challenged_game_id, started_at)
+    challenge = user_controller.update_challenge(
+        challenger_user_id,
+        challenged_user_id,
+        challenger_game_id,
+        challenged_game_id,
+        started_at,
+    )
 
     return jsonify(challenge)
 
