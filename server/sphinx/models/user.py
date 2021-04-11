@@ -27,3 +27,9 @@ class UserModel(db.Model):
 
     def __repr__(self):
         return f"<User {self.name}>"
+
+    def __getitem__(self, item):
+        return getattr(self, item)
+
+    def __setitem__(self, name, value):
+        return setattr(self, name, value)

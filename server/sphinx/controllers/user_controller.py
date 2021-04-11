@@ -36,4 +36,18 @@ class UserController:
         return response
 
     def search_by_email(self, email):
-        return self.repository.search_by_email(email)
+        users = self.repository.search_by_email(email)
+        users = [user.__dict__ for user in users]
+
+        for user in users:
+            del user['_sa_instance_state']
+
+            user["token"] = {
+                "access_token": user["token"],
+                "expiration_date": datetime.now().isoformat(sep=" ", timespec='seconds'),
+                "expires_in": 86400,
+                "refresh_token": "",
+                "type_token": "Bearer"
+            }
+
+        return users
