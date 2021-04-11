@@ -120,5 +120,11 @@ def get_user():
     return jsonify(user)
 
 
+@app.route("/user/email")
+def get_users_by_email():
+    users = user_controller.search_by_email(request.args.get("email"))
+    return jsonify(users)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

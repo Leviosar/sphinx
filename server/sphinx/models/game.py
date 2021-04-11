@@ -15,12 +15,14 @@ class GameModel(db.Model):
 
     @classmethod
     def create(cls, **kwargs):
-        db.session.add(cls(**kwargs))
+        game = cls(**kwargs)
+        db.session.add(game)
         db.session.commit()
-        return cls(**kwargs)
+        db.session.refresh(game)
+        return game
 
     def update(self):
         db.session.commit()
 
     def __repr__(self):
-        return f"<Game {self.title}>"
+        return f"<Game {self.id}>"

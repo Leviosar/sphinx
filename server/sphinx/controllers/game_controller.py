@@ -22,9 +22,9 @@ class GameController:
                 "code": 422,
             }
 
-        game_id = self.repository.store_game(user_id, start, end, points)
+        game = self.repository.store_game(user_id, start, end, points)
 
-        for c in categories:
-            self.repository.store_game_category(game_id, c)
+        for category in categories:
+            self.repository.store_game_category(game.id, category)
 
         return {"error": False}

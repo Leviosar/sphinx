@@ -34,3 +34,6 @@ class UserController:
         response = self.repository.get_ranking(limit)
 
         return response
+
+    def search_by_email(self, email):
+        return self.repository.search_by_email(email)
