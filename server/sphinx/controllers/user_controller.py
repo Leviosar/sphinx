@@ -51,3 +51,15 @@ class UserController:
             }
 
         return users
+
+
+    def create_challenge(self, challenger_user_id, challenged_user_id, started_at):
+        return self.repository.create_challenge(challenger_user_id, challenged_user_id, started_at)
+
+
+    def update_challenge(self, challenger_user_id, challenged_user_id, challenger_game_id, challenged_game_id, started_at):
+        return self.repository.update_challenge(challenger_user_id, challenged_user_id, challenger_game_id, challenged_game_id, started_at)
+
+    
+    def get_all_challenges_from_user(self, user_id):
+        return self.repository.get_all_challenges_from_user(user_id)

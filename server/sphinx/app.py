@@ -126,5 +126,34 @@ def get_users_by_email():
     return jsonify(users)
 
 
+@app.route("/challenge", methods=["POST"])
+def create_challenge():
+    challenger_user_id, challenged_user_id, started_at = request.json.get("challenger_user_id"), request.json.get("challenged_user_id"), request.json.get("started_at")
+
+    challenge = user_controller.create_challenge(challenger_user_id, challenged_user_id, started_at)
+    return jsonify(challenge)
+
+
+@app.route("/challenge", methods=["PUT"])
+def update_challenge():
+    challenger_user_id = request.json.get("challenger_user_id")
+    challenged_user_id = request.json.get("challenged_user_id") 
+    challenger_game_id = request.json.get("challenger_game_id")
+    challenged_game_id = request.json.get("challenged_game_id")
+    started_at = request.json.get("started_at") 
+
+    challenge = user_controller.update_challenge(challenger_user_id, challenged_user_id, challenger_game_id, challenged_game_id, started_at)
+
+    return jsonify(challenge)
+
+
+@app.route("/challenge")
+def get_all_challenges_from_user():
+    user_id = request.args.get("user_id")
+    challenges = user_controller.get_all_challenges_from_user(user_id)
+
+    return jsonify(challenges)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

@@ -8,3 +8,4 @@ from .game import GameModel
 from .game_categories import GameCategoriesModel
 from .question import QuestionModel
 from .option import OptionModel
+from .challenge import ChallengeModel
