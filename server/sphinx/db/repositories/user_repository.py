@@ -2,7 +2,7 @@ from db.repositories.base_repository import BaseRepository
 from models import UserModel, ChallengeModel, GameModel
 from sqlalchemy import text
 from sqlalchemy.orm import load_only
-
+from datetime import datetime
 
 class UserRepository(BaseRepository):
     def __init__(self):
@@ -11,7 +11,20 @@ class UserRepository(BaseRepository):
         super().__init__()
 
     def get(self, user_id):
-        return self.model.query.get(user_id)
+        user = self.model.query.get(user_id)
+        user = user.__dict__
+        
+        user.pop('_sa_instance_state', None)
+
+        user["token"] = {
+            "access_token": user["token"],
+            "expiration_date": datetime.now().isoformat(sep=" ", timespec='seconds'),
+            "expires_in": 86400,
+            "refresh_token": "",
+            "type_token": "Bearer"
+        }
+
+        return user
 
     def store(self, user_id, name, email, photo):
         return self.model.create(id=user_id, name=name, email=email, photo=photo)
@@ -84,8 +97,8 @@ class UserRepository(BaseRepository):
 
             challenge["challenger_game"] = GameModel.query.get(challenge["challenger_game_id"])
             challenge["challenged_game"] = GameModel.query.get(challenge["challenged_game_id"])
-            challenge["challenger_user"] = self.model.query.get(challenge["challenger_user_id"])
-            challenge["challenged_user"] = self.model.query.get(challenge["challenged_user_id"])
+            challenge["challenger_user"] = self.get(challenge["challenger_user_id"])
+            challenge["challenged_user"] = self.get(challenge["challenged_user_id"])
             
             del challenge["challenger_game_id"]
             del challenge["challenged_game_id"]
