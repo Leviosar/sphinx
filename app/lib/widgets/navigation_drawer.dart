@@ -42,7 +42,7 @@ class NavigationDrawer extends StatelessWidget {
               onPressed: () {},
             ),
             title: Text('Game history'),
-            onTap: () {},
+            onTap: () => this.push(context, "/games")
           ),
           ListTile(
             leading: IconButton(

@@ -9,6 +9,7 @@ part 'game.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Game {
+  int id;
   int points;
   String playerId;
   DateTime start;
@@ -19,6 +20,7 @@ class Game {
   GameModes mode;
 
   Game({
+    this.id,
     this.playerId, 
     this.start,
     this.end,
