@@ -92,6 +92,13 @@ def get_games_by_user_id():
     return jsonify(response)
 
 
+@app.route("/games/<game_id>", methods=["DELETE"])
+def delete_game(game_id):
+    response = game_controller.delete(game_id)
+
+    return jsonify(response)
+
+
 @app.route("/games/register", methods=["POST"])
 def register_game():
     response = game_controller.register(

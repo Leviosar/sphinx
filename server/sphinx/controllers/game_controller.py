@@ -28,3 +28,6 @@ class GameController:
             self.repository.store_game_category(game.id, category)
 
         return {"error": False}
+
+    def delete(self, game_id):
+        return self.repository.delete(game_id)
