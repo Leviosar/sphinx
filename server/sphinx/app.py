@@ -35,7 +35,7 @@ def hello_world():
     return "Ahoy"
 
 
-@app.route("/ranking")
+@app.route("/ranking", methods=["POST", "GET"])
 def get_ranking():
     limit = request.args.get("limit", 15)
     categories = request.json.get("categories", [])
