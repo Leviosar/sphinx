@@ -1,7 +1,14 @@
 from . import db
 from datetime import datetime
 from dataclasses import dataclass
+from typing import List
 
+GameCategories = db.Table(
+    'game_categories', 
+    db.Model.metadata,
+    db.Column('game_id', db.Integer, db.ForeignKey("games.id"), primary_key=True),
+    db.Column('category_id', db.Integer, db.ForeignKey("categories.id"))
+)
 
 @dataclass
 class GameModel(db.Model):
@@ -12,6 +19,7 @@ class GameModel(db.Model):
     started_at: datetime = db.Column(db.DateTime)
     ended_at: datetime = db.Column(db.DateTime)
     points: int = db.Column(db.Integer)
+    categories: List = db.relationship("CategoryModel", secondary=GameCategories, backref="game")
 
     @classmethod
     def create(cls, **kwargs):

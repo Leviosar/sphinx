@@ -9,7 +9,9 @@ class GameRepository(BaseRepository):
         super().__init__()
 
     def get_games_by_user_id(self, user_id):
-        return self.model.query.filter_by(user_id=user_id).all()
+        games = self.model.query.filter_by(user_id=user_id).all()
+        
+        return games
 
     def store_game(self, user_id, start, end, points):
         return self.model.create(
