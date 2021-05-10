@@ -30,8 +30,11 @@ class UserController:
 
         return self.auth(user_id)
 
-    def get_ranking(self, limit=15):
-        response = self.repository.get_ranking(limit)
+    def get_ranking(self, limit=15, categories=[]):
+        if len(categories) > 0:
+            response = self.repository.get_category_ranking(limit, categories)
+        else:
+            response = self.repository.get_ranking(limit)
 
         return response
 

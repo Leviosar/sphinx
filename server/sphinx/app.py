@@ -38,8 +38,8 @@ def hello_world():
 @app.route("/ranking")
 def get_ranking():
     limit = request.args.get("limit", 15)
-
-    response = user_controller.get_ranking(limit)
+    categories = request.json.get("categories", [])
+    response = user_controller.get_ranking(limit, categories)
 
     return jsonify(response)
 

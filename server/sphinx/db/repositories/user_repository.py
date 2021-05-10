@@ -3,6 +3,7 @@ from models import UserModel, ChallengeModel, GameModel
 from sqlalchemy import text
 from sqlalchemy.orm import load_only
 from datetime import datetime
+import json
 
 
 class UserRepository(BaseRepository):
@@ -52,6 +53,28 @@ class UserRepository(BaseRepository):
         )
 
         rows = self.db.execute(statement, limite=limit)
+
+        return [
+            {"id": user[0], "name": user[1], "email": user[2], "points": user[3]}
+            for user in rows
+        ]
+
+    def get_category_ranking(self, limit, categories):
+        array = json.dumps(categories).replace('[', '(').replace(']', ')')
+        
+        statement = text(
+            f"""SELECT users.id, users.name as name, users.email as email, SUM(games.points) as points
+            FROM users
+            INNER JOIN games ON users.id = games.user_id
+            INNER JOIN game_categories ON game_categories.game_id = games.id
+            WHERE game_categories.category_id IN {array}
+            GROUP BY users.id
+            ORDER BY points DESC
+            LIMIT :limite
+        """
+        )
+
+        rows = self.db.execute(statement, limite=limit, categories=categories)
 
         return [
             {"id": user[0], "name": user[1], "email": user[2], "points": user[3]}
