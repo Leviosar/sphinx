@@ -1,5 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:sphinx/views/home/home_page_challenges.dart';
 import 'package:sphinx/views/home/home_page_ranking.dart';
 
 import '../../controllers/user_bloc.dart';
@@ -42,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         if (!user.hasData) return Container();
 
         return Scaffold(
-          drawer: NavigationDrawer(),
+          drawer: NavigationDrawer(user.data),
           body: CustomScrollView(
             slivers: [
               CustomAppBar(user.data),
@@ -57,6 +58,12 @@ class _HomePageState extends State<HomePage> {
               ),
               SliverToBoxAdapter(
                 child: HomePageRanking(),
+              ),
+              SliverToBoxAdapter(
+                child: SideBanner(title: "Challenges", direction: SideBannerDirection.left),
+              ),
+              SliverToBoxAdapter(
+                child: HomePageChallenges(user: user.data),
               ),
               SliverFixedExtentList(
                 itemExtent: 50.0,

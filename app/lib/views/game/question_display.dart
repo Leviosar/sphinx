@@ -1,10 +1,14 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sphinx/controllers/game_bloc.dart';
 import 'package:sphinx/models/game.dart';
+import 'package:sphinx/models/game_modes.dart';
 import 'package:sphinx/models/question.dart';
+import 'package:sphinx/views/create_game/dificulty_selector.dart';
 import 'package:sphinx/views/game/option_button.dart';
 import 'package:sphinx/views/game/timer_display.dart';
+import 'package:sphinx/views/game_over/game_over_page.dart';
 import 'package:sphinx/views/home/home_page.dart';
 import 'package:sphinx/widgets/rounded_button.dart';
 import 'package:sphinx/widgets/spaced_column.dart';
@@ -31,10 +35,20 @@ class _QuestionDisplayState extends State<QuestionDisplay> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-  
+
+    int time = 45;
+
+    // TODO
+    // int modifier = Dificulty.values.indexOf(this.widget.game.dificulty) + 1;
+    // time = (time / modifier).ceil().abs();
+
+    // print(this.widget.game.dificulty);
+
+    if (this.widget.game.mode == GameModes.zen) time = 200;
+
     this.timerController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 15),
+      duration: Duration(seconds: time),
     );
 
     this.timerController.forward();
@@ -64,31 +78,15 @@ class _QuestionDisplayState extends State<QuestionDisplay> with SingleTickerProv
     );
   }
 
-  // TODO: Isso aqui deve ser uma página nova futuramente
   void openEndgamePopup() async {
     this.widget.game.end = DateTime.now();
     this.widget.game.points = this.points;
     
     BlocProvider.getBloc<GameBloc>().saveGame(this.widget.game);
-    
-    showDialog(context: context, builder: (BuildContext context) => SimpleDialog(
-      title: Text("Game over"),
-      contentPadding: const EdgeInsets.all(16.0),
-      children: [
-        Center(
-          child: Text("${(this.points ~/ 10)} / ${this.widget.game.questions.length}", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32.0)),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 38.0),
-          child: RoundedButton(
-            child: Text("Back to home"),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
-            }
-          ),
-        )
-      ]
-    ));
+
+    Navigator.of(context).push(
+      PageTransition(child: GameOverPage(game: this.widget.game, scoredPoints: this.points.toDouble()), type: PageTransitionType.bottomToTop)
+    );
   }
 
   void checkAnswer(bool correct) => correct ? this.points += 10 : this.points += 0;

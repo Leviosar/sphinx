@@ -17,7 +17,7 @@ class CategoryListing extends StatefulWidget {
   _CategoryListingState createState() => _CategoryListingState();
 }
 
-class _CategoryListingState extends State<CategoryListing> {
+class _CategoryListingState extends State<CategoryListing> with AutomaticKeepAliveClientMixin {
 
   List<bool> selectedCategories = [];
   List<Category> categories = [];
@@ -66,4 +66,7 @@ class _CategoryListingState extends State<CategoryListing> {
       ]
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

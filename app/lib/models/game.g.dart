@@ -11,21 +11,26 @@ Game _$GameFromJson(Map<String, dynamic> json) {
     playerId: json['playerId'] as String,
     start:
         json['start'] == null ? null : DateTime.parse(json['start'] as String),
+    end: json['end'] == null ? null : DateTime.parse(json['end'] as String),
     categories: (json['categories'] as List)
         ?.map((e) =>
             e == null ? null : Category.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     dificulty: _$enumDecodeNullable(_$DificultyEnumMap, json['dificulty']),
     mode: _$enumDecodeNullable(_$GameModesEnumMap, json['mode']),
-  )..questions = (json['questions'] as List)
-      ?.map((e) =>
-          e == null ? null : Question.fromJson(e as Map<String, dynamic>))
-      ?.toList();
+  )
+    ..points = json['points'] as int
+    ..questions = (json['questions'] as List)
+        ?.map((e) =>
+            e == null ? null : Question.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$GameToJson(Game instance) => <String, dynamic>{
+      'points': instance.points,
       'playerId': instance.playerId,
       'start': instance.start?.toIso8601String(),
+      'end': instance.end?.toIso8601String(),
       'categories': instance.categories?.map((e) => e?.toJson())?.toList(),
       'questions': instance.questions?.map((e) => e?.toJson())?.toList(),
       'dificulty': _$DificultyEnumMap[instance.dificulty],

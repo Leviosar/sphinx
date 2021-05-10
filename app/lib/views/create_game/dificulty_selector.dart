@@ -22,7 +22,7 @@ class DificultySelector extends StatefulWidget {
   _DificultySelectorState createState() => _DificultySelectorState();
 }
 
-class _DificultySelectorState extends State<DificultySelector> {
+class _DificultySelectorState extends State<DificultySelector> with AutomaticKeepAliveClientMixin {
   int dificultyValue = 0;
 
   @override
@@ -52,4 +52,7 @@ class _DificultySelectorState extends State<DificultySelector> {
       ]
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -14,6 +14,10 @@ class UserRepository(BaseRepository):
 
     def get(self, user_id):
         user = self.model.query.get(user_id)
+
+        if not user:
+            return None
+
         user = user.__dict__
 
         user.pop("_sa_instance_state", None)
@@ -61,7 +65,7 @@ class UserRepository(BaseRepository):
 
     def get_category_ranking(self, limit, categories):
         array = json.dumps(categories).replace('[', '(').replace(']', ')')
-        
+
         statement = text(
             f"""SELECT users.id, users.name as name, users.email as email, SUM(games.points) as points
             FROM users

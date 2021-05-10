@@ -11,7 +11,7 @@ Option _$OptionFromJson(Map<String, dynamic> json) {
     id: json['id'] as int,
     idQuestion: json['question_id'] as int,
     text: json['text'] as String,
-  )..correct = intToBool(json['correct'] as int);
+  )..correct = json['correct'] as bool;
 }
 
 Map<String, dynamic> _$OptionToJson(Option instance) => <String, dynamic>{

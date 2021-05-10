@@ -32,6 +32,8 @@ class UserBloc extends BlocBase {
     if (authResponse.statusCode == 200) {
       BlocProvider.getBloc<CategoriesBloc>().fetchCategories();
       this.fetchRanking();
+    } else {
+      print(authResponse.body);
     }
   }
 
@@ -41,7 +43,6 @@ class UserBloc extends BlocBase {
     http.Response response = await GetRankingRequest(user).send();
       
     List<dynamic> data = jsonDecode(response.body);
-    print(data);
   
     if (response.statusCode == 200) {
       List<User> ranking = List.generate(data.length, (index) => User.fromJson(data[index]));

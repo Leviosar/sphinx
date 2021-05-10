@@ -13,19 +13,19 @@ class ExpansionAnimatedButton extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    double tickSize = 60 + (1500 * this.width.drive(CurveTween(curve: Curves.easeInExpo)).value);
+    double tickSize = 56 + (1500 * this.width.drive(CurveTween(curve: Curves.easeInExpo)).value);
 
     return Padding(
       padding: EdgeInsets.all(max(0, 10.0 - (0.01 * tickSize))),
       child: InkWell(
         onTap: this.onPressed,
         child: Container(
-          child: tickSize != 60 ? 
+          child: tickSize != 56 ? 
             Center(
               child: SizedBox(
                 child: CircularProgressIndicator(),
-                height: 50,
-                width: 50
+                height: 48,
+                width: 48
               ),
             ) : 
             Row(

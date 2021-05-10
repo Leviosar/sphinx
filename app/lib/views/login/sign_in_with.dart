@@ -29,6 +29,7 @@ class _SignInWithState extends State<SignInWith> with TickerProviderStateMixin {
       User user = User(id: account.id, email: account.email, photo: account.photoUrl, name: account.displayName);
       BlocProvider.getBloc<UserBloc>().user = user;
       await BlocProvider.getBloc<UserBloc>().auth();
+    
       Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
     } catch (error) {
       print(error);
